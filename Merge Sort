@@ -1,0 +1,84 @@
+#include<stdio.h>
+#include<iostream>
+using namespace std;
+
+void merge(int Arr[],int left,int mid,int right)
+{
+    int n1=mid-left +1 ;
+    int n2= right-mid;
+    int L[n1],R[n2];
+    for(int i=0;i<n1;i++)
+    {
+        L[i]=Arr[left+i];
+    }
+    for(int j=0;j<n2;j++)
+    {
+        R[j]=Arr[mid+j+1];
+    }
+    int i,j,k;
+    i=0;
+    j=0;
+    k=left;
+    while(i<n1 &&j<n2 )
+    {
+        if(L[i]<=R[j])
+        {
+            Arr[k]=L[i];
+            i++;
+            k++;
+        }
+        else
+        {
+            Arr[k]=R[j];
+            j++;
+            k++;
+        }
+    }
+    while (i<n1)
+    {
+        Arr[k]=L[i];
+        i++;
+        k++;
+    }
+    while (j<n2)
+    {
+        Arr[k]=R[j];
+        j++;
+        k++;
+
+    }
+}
+void mergesort(int Arr[],int l,int r)
+{
+    if(l<r)
+    {
+        int mid=l+(r-l)/2;
+        mergesort(Arr,l,mid);
+        mergesort(Arr,mid+1,r);
+        merge(Arr,l,mid,r);
+
+    }
+}
+void printArray(int Arr[],int size)
+{
+    int i;
+    for(i=0;i<size;i++)
+    {
+        cout<<Arr[i]<<" ";
+        cout<<endl;
+    }
+}
+int main()
+{
+    int arr[10];
+    cout<<"Enter the Array element: "<<endl;
+    for(int i=0;i<10;i++)
+    {
+        cin>>arr[i];
+    }
+    int size= sizeof(arr)/sizeof(arr[0]);
+    mergesort(arr,0,size-1);
+    cout<<"Printing the sorted array:"<<endl;
+    printArray(arr,size);
+    return 0;
+}
